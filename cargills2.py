@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 import time
 
-API_KEY = "AIzaSyA0JnfxLt5GAbIHoV9dDmszfBbnJsrc1y8"  
+API_KEY = "API-KEY"  
 CENTERS_CSV = "sri_lanka_30km_centers.csv"  
 OUTPUT_CSV = "cargills_outlets.csv"
 

@@ -12,3 +12,23 @@ for col in df1.columns:
 
 cleaned_df = merged_df[merged_df['name'].astype(str).str.strip().str.lower().str.startswith('cargills')]
 cleaned_df.to_csv('cargills.csv', index=False)
+
+# Read the files
+df_keells = pd.read_csv('keells_stores.csv')
+df_ratings = pd.read_csv('rating.csv')
+df_cargills = pd.read_csv('cargills.csv')
+
+df_keells = df_keells.rename(columns={'latitude': 'lat', 'longitude': 'lng'})
+
+keells_merged = pd.merge(df_keells, df_ratings[['place_id', 'num_ofratings']], on='place_id', how='left')
+
+# Select columns and ensure order
+cols = ['place_id', 'address', 'lat', 'lng', 'num_ratings']
+keells_selected = keells_merged[cols]
+cargills_selected = df_cargills[cols]
+
+# Combine all rows
+combined = pd.concat([keells_selected, cargills_selected], ignore_index=True)
+
+# Save to a new CSV
+combined.to_csv('combined_places.csv', index=False)
