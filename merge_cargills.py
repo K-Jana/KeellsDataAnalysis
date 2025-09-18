@@ -15,15 +15,18 @@ cleaned_df.to_csv('cargills.csv', index=False)
 
 # Read the files
 df_keells = pd.read_csv('keells_stores.csv')
-df_ratings = pd.read_csv('rating.csv')
+df_ratings = pd.read_csv('ratings.csv')
 df_cargills = pd.read_csv('cargills.csv')
 
 df_keells = df_keells.rename(columns={'latitude': 'lat', 'longitude': 'lng'})
+df_ratings = df_ratings.rename(columns={'avg_rating': 'rating'})
+df_cargills=df_cargills.rename(columns={'user_ratings':'rating'})
 
-keells_merged = pd.merge(df_keells, df_ratings[['place_id', 'num_ofratings']], on='place_id', how='left')
+
+keells_merged = pd.merge(df_keells, df_ratings[['place_id', 'num_ratings','rating']], on='place_id', how='left')
 
 # Select columns and ensure order
-cols = ['place_id', 'address', 'lat', 'lng', 'num_ratings']
+cols = ['place_id', 'address', 'lat', 'lng', 'num_ratings','rating']
 keells_selected = keells_merged[cols]
 cargills_selected = df_cargills[cols]
 
